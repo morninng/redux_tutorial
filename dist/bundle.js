@@ -923,11 +923,15 @@
 	var redux_1 = __webpack_require__(12);
 	var store = redux_1.createStore(counter);
 	var Counter = function (_a) {
-	    var value = _a.value;
-	    return React.createElement("h1", null, value);
+	    var value = _a.value, onIncrement = _a.onIncrement, onDecrement = _a.onDecrement;
+	    return (React.createElement("div", null, React.createElement("h1", null, value), React.createElement("button", {onClick: onIncrement}, " + "), React.createElement("button", {onClick: onDecrement}, " - ")));
 	};
 	var render = function () {
-	    ReactDOM.render(React.createElement(Counter, {value: store.getState()}), document.getElementById('root'));
+	    ReactDOM.render(React.createElement(Counter, {value: store.getState(), onIncrement: function () {
+	        return store.dispatch({ type: 'INCREMENT' });
+	    }, onDecrement: function () {
+	        return store.dispatch({ type: 'DECREMENT' });
+	    }}), document.getElementById('root'));
 	};
 	var test_execute = function () {
 	    console.log("test execute");
@@ -936,9 +940,6 @@
 	        render();
 	    });
 	    render();
-	    document.addEventListener('click', function () {
-	        store.dispatch({ type: "INCREMENT" });
-	    });
 	};
 	Object.defineProperty(exports, "__esModule", { value: true });
 	exports.default = test_execute;
