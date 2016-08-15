@@ -12,6 +12,7 @@ gulp.task('clean', () => {
   del(['./dist/**']);
 });
 
+
  gulp.task('ts', function() {
      gulp.src([
             './ts/*.ts',

@@ -6,10 +6,10 @@ const env = process.env.NODE_ENV;
 
 let config = {
   entry: {
-    app :'./src/entrypoint.ts'
+    app :'./ts/entrypoint.ts'
   },
   output: {
-    filename: 'js/bundle.js'
+    filename: './bundle.js'
   },
   resolve: {
     extensions: ['', '.ts', '.webpack.js', '.web.js', '.js']
