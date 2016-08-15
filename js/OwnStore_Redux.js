@@ -1,5 +1,6 @@
 /// <reference path="./../typings/globals/redux/index.d.ts" />
 "use strict";
+var _this = this;
 var counter = function (state, action) {
     if (state === void 0) { state = 0; }
     switch (action.type) {
@@ -11,10 +12,33 @@ var counter = function (state, action) {
             return state;
     }
 };
-var redux_1 = require('redux');
+var createStore_own = function (reducer) {
+    var state;
+    var listeners = [];
+    var getState = function () {
+        return state;
+    };
+    var dispatch = function (action) {
+        state = reducer(state, action);
+        _this.listeners.forEach(function (listener) {
+            listener();
+            return;
+        });
+    };
+    var subscribe = function (listener) {
+        _this.listeners.push(listener);
+        return function () {
+            _this.listeners = listeners.filter(function (l) {
+                return (l !== listener);
+            });
+        };
+    };
+    dispatch({});
+    return { getState: getState, dispatch: dispatch, subscribe: subscribe };
+};
 var test_execute = function () {
     console.log("test execute");
-    var store = redux_1.createStore(counter);
+    var store = createStore_own(counter);
     console.log('state', store.getState());
     store.dispatch({ type: "INCREMENT" });
     store.dispatch({ type: "INCREMENT" });
