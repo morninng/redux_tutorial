@@ -8,10 +8,28 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 
+const counter = (state = 0, action) => {
+
+    switch(action.type){
+        case 'INCREMENT':
+            return state+1;
+        case 'DECREMENT':
+            return state-1;
+        default:
+            return state;
+    }
+}
+import {createStore} from 'redux';
+const store = createStore(counter);
+
+
+const Counter = ({value}) =>{
+    return <h1>{value}</h1>
+}
 
 const render = ()=>{
     ReactDOM.render(
-        <div>aa</div>,
+        <Counter value={store.getState()} />,
         document.getElementById('root')
     );
 }
@@ -19,7 +37,15 @@ const render = ()=>{
 
 const test_execute = () =>{
     console.log("test execute");
+    store.subscribe(()=>{
+        console.log("subscribe is called");
+        render();
+    })
     render();
+    document.addEventListener('click', ()=>{
+        store.dispatch({type:"INCREMENT"});
+    })
+
 }
 
 
