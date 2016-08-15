@@ -12,3 +12,9 @@ specフォルダ以下にテストコードを格納
 gup tsでビルド
 
 SpecRunner.htmlをダブルクリックして、確認
+
+
+■Reactを実行するのにつまったところ
+
+http://staxmanade.com/2015/08/playing-with-typescript-and-jsx/
+https://www.typescriptlang.org/docs/handbook/react-&-webpack.html

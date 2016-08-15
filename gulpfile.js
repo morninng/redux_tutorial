@@ -24,7 +24,7 @@ gulp.task('clean', () => {
 
 // TypeScriptのコンパイルとwebpackの実行
 gulp.task('webpack', () => {
-  gulp.src(['./ts/*.ts'])
+  gulp.src(['./ts/*.ts', './ts/*.tsx'])
   .pipe(plumber())
   .pipe(webpack(webpackConfig))
   .pipe(gulp.dest('./dist'));
