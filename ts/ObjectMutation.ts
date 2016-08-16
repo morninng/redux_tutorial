@@ -30,7 +30,6 @@ const toggleTodo_mutate3 = (todo : Object) =>{
     return [  ...todo, {completed: !todo.completed}
     ];
 }
-
 */
 
 
