@@ -46,9 +46,9 @@
 
 	"use strict";
 	var test_1 = __webpack_require__(16);
-	var TodoReducerComposition_obj_1 = __webpack_require__(15);
+	var TodoReducerComposition_combineReducer_1 = __webpack_require__(15);
 	console.log("aaa");
-	TodoReducerComposition_obj_1.test_func();
+	TodoReducerComposition_combineReducer_1.test_func();
 	var fizz_obj = new test_1.default();
 
 
@@ -946,14 +946,11 @@
 	            return state;
 	    }
 	};
-	var todoApp = function (state, action) {
-	    if (state === void 0) { state = {}; }
-	    return {
-	        todos: todos_reducer_composition_obj(state.todos, action),
-	        visibilityFilter: visibilityFilter(state.visibiltyFilter, action)
-	    };
-	};
 	var redux_1 = __webpack_require__(12);
+	var todoApp = redux_1.combineReducers({
+	    todos: todos_reducer_composition_obj,
+	    visibilityFilter: visibilityFilter
+	});
 	exports.test_func = function () {
 	    var store = redux_1.createStore(todoApp);
 	    console.log("initial state");
