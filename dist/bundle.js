@@ -46,9 +46,9 @@
 
 	"use strict";
 	var test_1 = __webpack_require__(16);
-	var Counter_Redux_react_1 = __webpack_require__(15);
+	var TodoReducerComposition_obj_1 = __webpack_require__(15);
 	console.log("aaa");
-	Counter_Redux_react_1.default();
+	TodoReducerComposition_obj_1.test_func();
 	var fizz_obj = new test_1.default();
 
 
@@ -907,42 +907,66 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var React = __webpack_require__(17);
-	var ReactDOM = __webpack_require__(18);
-	var counter = function (state, action) {
-	    if (state === void 0) { state = 0; }
+	var todo_each = function (each_state, action) {
 	    switch (action.type) {
-	        case 'INCREMENT':
-	            return state + 1;
-	        case 'DECREMENT':
-	            return state - 1;
+	        case 'ADD_TODO':
+	            return {
+	                id: action.id,
+	                text: action.text,
+	                completed: false
+	            };
+	        case 'TOGGLE_TODO':
+	            if (each_state.id === action.id) {
+	                return Object.assign({}, each_state, { completed: !each_state.completed });
+	            }
+	            return Object.assign({}, each_state);
+	        default:
+	            return each_state;
+	    }
+	};
+	var todos_reducer_composition_obj = function (state, action) {
+	    if (state === void 0) { state = []; }
+	    switch (action.type) {
+	        case 'ADD_TODO':
+	            return state.concat([todo_each(state, action)]);
+	        case 'TOGGLE_TODO':
+	            return state.map(function (todo) {
+	                return todo_each(todo, action);
+	            });
 	        default:
 	            return state;
 	    }
 	};
 	var redux_1 = __webpack_require__(12);
-	var store = redux_1.createStore(counter);
-	var Counter = function (_a) {
-	    var value = _a.value, onIncrement = _a.onIncrement, onDecrement = _a.onDecrement;
-	    return (React.createElement("div", null, React.createElement("h1", null, value), React.createElement("button", {onClick: onIncrement}, " + "), React.createElement("button", {onClick: onDecrement}, " - ")));
-	};
-	var render = function () {
-	    ReactDOM.render(React.createElement(Counter, {value: store.getState(), onIncrement: function () {
-	        return store.dispatch({ type: 'INCREMENT' });
-	    }, onDecrement: function () {
-	        return store.dispatch({ type: 'DECREMENT' });
-	    }}), document.getElementById('root'));
-	};
-	var test_execute = function () {
-	    console.log("test execute");
-	    store.subscribe(function () {
-	        console.log("subscribe is called");
-	        render();
+	exports.test_func = function () {
+	    var store = redux_1.createStore(todos_reducer_composition_obj);
+	    console.log("initial state");
+	    console.log(store.getState());
+	    console.log("dispatching add_todo");
+	    store.dispatch({
+	        type: 'ADD_TODO',
+	        id: 1,
+	        text: 'first item'
 	    });
-	    render();
+	    console.log("first", store.getState());
+	    store.dispatch({
+	        type: 'ADD_TODO',
+	        id: 2,
+	        text: 'second item'
+	    });
+	    console.log("second", store.getState());
+	    store.dispatch({
+	        type: 'ADD_TODO',
+	        id: 3,
+	        text: 'third item'
+	    });
+	    console.log("third", store.getState());
+	    store.dispatch({
+	        type: 'TOGGLE_TODO',
+	        id: 2
+	    });
+	    console.log("complete change second", store.getState());
 	};
-	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.default = test_execute;
 
 
 /***/ },
@@ -961,18 +985,6 @@
 	Object.defineProperty(exports, "__esModule", { value: true });
 	exports.default = FizzBuzz;
 
-
-/***/ },
-/* 17 */
-/***/ function(module, exports) {
-
-	module.exports = React;
-
-/***/ },
-/* 18 */
-/***/ function(module, exports) {
-
-	module.exports = ReactDOM;
 
 /***/ }
 /******/ ]);
