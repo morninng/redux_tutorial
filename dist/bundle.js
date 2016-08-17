@@ -937,9 +937,25 @@
 	            return state;
 	    }
 	};
+	var visibilityFilter = function (state, action) {
+	    if (state === void 0) { state = 'SHOW_ALL'; }
+	    switch (action.type) {
+	        case 'SET_VISIBILITY_FILTER':
+	            return action.filter;
+	        default:
+	            return state;
+	    }
+	};
+	var todoApp = function (state, action) {
+	    if (state === void 0) { state = {}; }
+	    return {
+	        todos: todos_reducer_composition_obj(state.todos, action),
+	        visibilityFilter: visibilityFilter(state.visibiltyFilter, action)
+	    };
+	};
 	var redux_1 = __webpack_require__(12);
 	exports.test_func = function () {
-	    var store = redux_1.createStore(todos_reducer_composition_obj);
+	    var store = redux_1.createStore(todoApp);
 	    console.log("initial state");
 	    console.log(store.getState());
 	    console.log("dispatching add_todo");
@@ -964,6 +980,11 @@
 	    store.dispatch({
 	        type: 'TOGGLE_TODO',
 	        id: 2
+	    });
+	    console.log("complete change second", store.getState());
+	    store.dispatch({
+	        type: 'SET_VISIBILITY_FILTER',
+	        filter: "completed"
 	    });
 	    console.log("complete change second", store.getState());
 	};

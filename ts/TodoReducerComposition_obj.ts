@@ -35,13 +35,33 @@ const todos_reducer_composition_obj = (state = [], action)=>{
     }
 }
 
+const visibilityFilter = (state = 'SHOW_ALL', action) =>{
+
+    switch(action.type){
+        case 'SET_VISIBILITY_FILTER':
+            return action.filter
+        default:
+            return state;
+    }
+}
+
+
+const todoApp = (state = {}, action) =>{
+
+    return {
+        todos: todos_reducer_composition_obj(state.todos, action),
+        visibilityFilter: visibilityFilter(state.visibiltyFilter, action)
+    };
+}
+
+
 
 
 import {createStore} from 'redux';
 
 export const test_func = ()=>{
 
-    const store = createStore(todos_reducer_composition_obj);
+    const store = createStore(todoApp);
     console.log("initial state");
     console.log(store.getState());
     console.log("dispatching add_todo");
@@ -72,6 +92,10 @@ export const test_func = ()=>{
     })
     console.log("complete change second", store.getState());
 
-
+    store.dispatch({
+        type:'SET_VISIBILITY_FILTER',
+        filter:"completed"
+    })
+    console.log("complete change second", store.getState());
 }
 
