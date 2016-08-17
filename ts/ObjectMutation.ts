@@ -18,7 +18,6 @@ const toggleTodo_mutate1 = (todo : TODO) =>{
     };
 }
 
-
 const toggleTodo_mutate2 = (todo : TODO) =>{
     return Object.assign ( {}, todo, {completed: !todo.completed});
 }
