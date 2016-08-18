@@ -38,14 +38,20 @@ var visibilityFilter = function (state, action) {
             return state;
     }
 };
-var todoApp = function (state, action) {
-    if (state === void 0) { state = {}; }
+var redux_1 = require('redux');
+var todoApp = redux_1.combineReducers({
+    todos: todos_reducer_composition_obj,
+    visibilityFilter: visibilityFilter
+});
+/*
+const todoApp = (state = {}, action) =>{
+
     return {
         todos: todos_reducer_composition_obj(state.todos, action),
         visibilityFilter: visibilityFilter(state.visibiltyFilter, action)
     };
-};
-var redux_1 = require('redux');
+}
+*/
 exports.test_func = function () {
     var store = redux_1.createStore(todoApp);
     console.log("initial state");

@@ -2,7 +2,10 @@
 var test_1 = require('./test');
 //import  test_execute from './Counter_Redux';
 //import  test_execute from './OwnStore_Redux';
-var Counter_Redux_react_1 = require('./Counter_Redux_react');
+//import  test_execute from './Counter_Redux_react';
+// import  {test_func} from './TodoReducerComposition_obj';
+//import {test_func} from'./TodoReducerComposition_combineReducer';
+var TodoReducerComposition_combineReducer_scratch_1 = require('./TodoReducerComposition_combineReducer_scratch');
 console.log("aaa");
-Counter_Redux_react_1["default"]();
+TodoReducerComposition_combineReducer_scratch_1.test_func();
 var fizz_obj = new test_1["default"]();

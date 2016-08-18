@@ -46,9 +46,9 @@
 
 	"use strict";
 	var test_1 = __webpack_require__(16);
-	var TodoReducerComposition_combineReducer_1 = __webpack_require__(15);
+	var TodoReducerComposition_react_1 = __webpack_require__(15);
 	console.log("aaa");
-	TodoReducerComposition_combineReducer_1.test_func();
+	TodoReducerComposition_react_1.test_func();
 	var fizz_obj = new test_1.default();
 
 
@@ -947,43 +947,42 @@
 	    }
 	};
 	var redux_1 = __webpack_require__(12);
+	var React = __webpack_require__(17);
+	var ReactDOM = __webpack_require__(18);
 	var todoApp = redux_1.combineReducers({
 	    todos: todos_reducer_composition_obj,
 	    visibilityFilter: visibilityFilter
 	});
+	var store = redux_1.createStore(todoApp);
+	var nextTodoId = 0;
+	var TodoApp3 = React.createClass({
+	    propTypes: {
+	        todos: React.PropTypes.array,
+	        aaa: React.PropTypes.string
+	    },
+	    render: function () {
+	        return (React.createElement("div", null, React.createElement("button", {onClick: function () {
+	            nextTodoId++;
+	            store.dispatch({
+	                type: 'ADD_TODO',
+	                text: 'test',
+	                id: nextTodoId
+	            });
+	        }}, "Add todo"), React.createElement("ul", null, React.createElement("li", null, "aaa"), React.createElement("li", null, this.props.aaa)), React.createElement("ul", null, this.props.todos.map(function (todo) { return React.createElement("li", {key: todo.id}, todo.text); }))));
+	    }
+	});
+	var render = function () {
+	    var todo_test = store.getState();
+	    console.log(todo_test);
+	    ReactDOM.render(React.createElement(TodoApp3, {aaa: "kk", todos: store.getState().todos}), document.getElementById('root'));
+	};
 	exports.test_func = function () {
-	    var store = redux_1.createStore(todoApp);
-	    console.log("initial state");
-	    console.log(store.getState());
-	    console.log("dispatching add_todo");
+	    store.subscribe(render);
 	    store.dispatch({
 	        type: 'ADD_TODO',
 	        id: 1,
 	        text: 'first item'
 	    });
-	    console.log("first", store.getState());
-	    store.dispatch({
-	        type: 'ADD_TODO',
-	        id: 2,
-	        text: 'second item'
-	    });
-	    console.log("second", store.getState());
-	    store.dispatch({
-	        type: 'ADD_TODO',
-	        id: 3,
-	        text: 'third item'
-	    });
-	    console.log("third", store.getState());
-	    store.dispatch({
-	        type: 'TOGGLE_TODO',
-	        id: 2
-	    });
-	    console.log("complete change second", store.getState());
-	    store.dispatch({
-	        type: 'SET_VISIBILITY_FILTER',
-	        filter: "completed"
-	    });
-	    console.log("complete change second", store.getState());
 	};
 
 
@@ -1003,6 +1002,18 @@
 	Object.defineProperty(exports, "__esModule", { value: true });
 	exports.default = FizzBuzz;
 
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	module.exports = React;
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	module.exports = ReactDOM;
 
 /***/ }
 /******/ ]);
