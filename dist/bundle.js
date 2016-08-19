@@ -954,33 +954,42 @@
 	    visibilityFilter: visibilityFilter
 	});
 	var store = redux_1.createStore(todoApp);
-	var nextTodoId = 0;
+	var nextTodoId = 1;
 	var TodoApp3 = React.createClass({
 	    propTypes: {
 	        todos: React.PropTypes.array,
 	        aaa: React.PropTypes.string
 	    },
 	    render: function () {
-	        return (React.createElement("div", null, React.createElement("button", {onClick: function () {
+	        var _this = this;
+	        return (React.createElement("div", null, React.createElement("input", {ref: function (node) { _this.input = node; }}), React.createElement("button", {onClick: function () {
 	            nextTodoId++;
 	            store.dispatch({
 	                type: 'ADD_TODO',
-	                text: 'test',
+	                text: _this.input.value,
 	                id: nextTodoId
 	            });
-	        }}, "Add todo"), React.createElement("ul", null, React.createElement("li", null, "aaa"), React.createElement("li", null, this.props.aaa)), React.createElement("ul", null, this.props.todos.map(function (todo) { return React.createElement("li", {key: todo.id}, todo.text); }))));
+	            _this.input.value = '';
+	        }}, "Add todo"), React.createElement("div", null, this.props.aaa), React.createElement("ul", null, this.props.todos.map(function (todo) {
+	            return React.createElement("li", {onClick: function () {
+	                store.dispatch({
+	                    type: 'TOGGLE_TODO',
+	                    id: todo.id
+	                });
+	            }, style: {
+	                textDecoration: todo.completed ? 'line-through' : 'none'
+	            }, key: todo.id}, todo.text);
+	        }))));
 	    }
 	});
 	var render = function () {
-	    var todo_test = store.getState();
-	    console.log(todo_test);
 	    ReactDOM.render(React.createElement(TodoApp3, {aaa: "kk", todos: store.getState().todos}), document.getElementById('root'));
 	};
 	exports.test_func = function () {
 	    store.subscribe(render);
 	    store.dispatch({
 	        type: 'ADD_TODO',
-	        id: 1,
+	        id: 0,
 	        text: 'first item'
 	    });
 	};

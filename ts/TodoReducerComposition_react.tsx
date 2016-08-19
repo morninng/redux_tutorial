@@ -62,7 +62,7 @@ const store = createStore(todoApp);
 
 
 
-let nextTodoId = 0;
+let nextTodoId = 1;
 
 const TodoApp3 = React.createClass({
     propTypes: {
@@ -72,20 +72,31 @@ const TodoApp3 = React.createClass({
     render: function{
         return (
             <div>
+                <input ref={node => {this.input = node;}} />
                 <button onClick={()=>{
                     nextTodoId++;
                     store.dispatch({
                         type:'ADD_TODO',
-                        text:'test',
+                        text:this.input.value,
                         id:nextTodoId
                     })
+                    this.input.value = '';
                 }}>Add todo</button>
-                <ul>
-                    <li>aaa</li>
-                    <li>{this.props.aaa}</li>
-                </ul>
+                <div>{this.props.aaa}
+                </div>
                 <ul>{
-                    this.props.todos.map(todo => <li key={todo.id}>{todo.text}</li>)
+                    this.props.todos.map(todo => 
+                        <li onClick={
+                            ()=>{store.dispatch({
+                                type:'TOGGLE_TODO',
+                                id: todo.id
+                            })}
+                            }
+                        style={{
+                            textDecoration:todo.completed? 'line-through' : 'none'
+                        }}
+                         key={todo.id}>{todo.text}
+                        </li>)
                     }
                 </ul>
             </div>
@@ -96,8 +107,6 @@ const TodoApp3 = React.createClass({
 
 
   const render = () => {
-      let todo_test = store.getState();
-      console.log(todo_test);
       ReactDOM.render(
         <TodoApp3 aaa="kk" todos = {store.getState().todos}  ></TodoApp3>
         ,
@@ -113,11 +122,9 @@ export const test_func = ()=>{
 
     store.dispatch({
         type:'ADD_TODO',
-        id:1,
+        id:0,
         text:'first item'
     })
-
-  //render();
 
 }
 
